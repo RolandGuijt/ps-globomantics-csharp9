@@ -33,7 +33,8 @@ namespace Shared.Dtos
         public int PercentageSold { get; }
         public int TicketPrice { get; }
 
-        public void Deconstruct(out int id, out DateTimeOffset date, out string name, out EventType eventType, out string venue, out int percentageSold, out int ticketPrice)
+        public void Deconstruct(out int id, out DateTimeOffset date, out string name, out EventType eventType,
+            out string venue, out int percentageSold, out int ticketPrice)
         {
             id = Id;
             date = Date;

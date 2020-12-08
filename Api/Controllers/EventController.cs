@@ -11,15 +11,15 @@ namespace Api.Controllers
     [Route("event")]
     public class EventController : Controller
     {
-        private readonly EventRepository _eventRepository;
         private readonly EventMapper _eventMapper;
+        private readonly EventRepository _eventRepository;
 
         public EventController(EventRepository eventRepository, EventMapper eventMapper)
         {
             _eventRepository = eventRepository;
             _eventMapper = eventMapper;
         }
-        
+
         [HttpGet]
         public IActionResult GetEvents()
         {
@@ -43,7 +43,7 @@ namespace Api.Controllers
             var eventDto = _eventMapper.ConvertEntityToPriceDto(eventEntity);
             return Ok(eventDto);
         }
-        
+
         [HttpPost("/conference")]
         public IActionResult AddConference(ConferenceDto conferenceDto)
         {
@@ -52,7 +52,7 @@ namespace Api.Controllers
             _eventRepository.AddEvent(entity);
             return CreatedAtAction("GetEvent", new {eventId = entity.Id}, entity);
         }
-        
+
         [HttpPost("/multidayconference")]
         public IActionResult AddMultiDayConference(MultiDayConferenceDto conferenceDto)
         {
@@ -61,7 +61,7 @@ namespace Api.Controllers
             _eventRepository.AddEvent(entity);
             return CreatedAtAction("GetEvent", new {eventId = entity.Id}, entity);
         }
-        
+
         [HttpPost("/concert")]
         public IActionResult AddConcert(ConcertDto concertDto)
         {
@@ -70,7 +70,7 @@ namespace Api.Controllers
             _eventRepository.AddEvent(entity);
             return CreatedAtAction("GetEvent", new {eventId = entity.Id}, entity);
         }
-        
+
         [HttpPost("/sportsgame")]
         public IActionResult AddSportsGame(SportsGameDto sportsGameDto)
         {

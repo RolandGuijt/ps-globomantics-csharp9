@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using Api.Entities;
-using Microsoft.AspNetCore.Builder;
 using Shared.Enums;
 
 namespace Api
 {
     public static class PriceCalculator
     {
-        private static int _marginPercentage = 40;
+        private static readonly int _marginPercentage = 40;
+
         public static int CalculateForEvent(EventEntity eventEntity)
         {
             var price = 0;
@@ -27,7 +26,7 @@ namespace Api
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             switch (eventEntity.VenueCostType)
             {
                 case CostType.Cheap:
@@ -94,11 +93,11 @@ namespace Api
             else if (eventEntity is SportsGameEntity sportsGame)
             {
                 if (sportsGame.Capacity < 100)
-                    price += (sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer) / sportsGame.Sold;
+                    price += sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer / sportsGame.Sold;
                 if (sportsGame.Capacity >= 100 && (sportsGame.Capacity < 150 || sportsGame.CostsPerPlayer > 1000))
                     price += 100;
                 if (sportsGame.Capacity >= 150)
-                    price += (sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer) / 200;
+                    price += sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer / 200;
             }
 
             price = price + price / 100 * _marginPercentage;

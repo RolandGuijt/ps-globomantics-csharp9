@@ -1,6 +1,4 @@
-﻿@using global::Shared
-@using global::Shared.Dtos
-@using Web.ViewModels
+﻿@using Web.ViewModels
 <tr>
     <td class="bold big">
         @EventViewModel.Name
@@ -21,7 +19,10 @@
         @EventViewModel.TicketPrice
     </td>
 </tr>
+
 @code {
+
     [Parameter]
     public EventPriceViewModel EventViewModel { get; set; }
+
 }

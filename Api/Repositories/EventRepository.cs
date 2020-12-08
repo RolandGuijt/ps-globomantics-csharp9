@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Api.Entities;
-using Shared;
 using Shared.Enums;
 
 namespace Api.Repositories
@@ -82,7 +81,7 @@ namespace Api.Repositories
         {
             return _events.SingleOrDefault(e => e.Id == id);
         }
-        
+
         public void AddEvent(EventEntity eventEntity)
         {
             eventEntity.Id = new Random(9999999).Next();

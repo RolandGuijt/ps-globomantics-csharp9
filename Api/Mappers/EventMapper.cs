@@ -31,21 +31,21 @@ namespace Api.Mappers
             entity.BadgeCosts = dto.BadgeCosts;
             entity.CateringCosts = dto.CateringCosts;
         }
-        
+
         public void FillMultiDayConferenceEntityWithDto(MultiDayConferenceDto dto, MultiDayConferenceEntity entity)
         {
             FillConferenceEntityWithDto(dto, entity);
             entity.NumberOfDays = dto.NumberOfDays;
             entity.AccomodationCostType = dto.AccomodationCostType;
         }
-        
+
         public void FillConcertEntityWithDto(ConcertDto dto, ConcertEntity entity)
         {
             FillEventEntityWithDto(dto, entity);
             entity.ArtistCosts = dto.ArtistCosts;
             entity.ArtistCostType = dto.ArtistCostType;
         }
-        
+
         public void FillSportsGameEntityWithDto(SportsGameDto dto, SportsGameEntity entity)
         {
             FillEventEntityWithDto(dto, entity);

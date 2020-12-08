@@ -1,5 +1,4 @@
 ﻿using System;
-using Shared;
 using Shared.Enums;
 
 namespace Api.Entities

@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Shared.Enums
+﻿namespace Shared.Enums
 {
     public enum EventType
     {

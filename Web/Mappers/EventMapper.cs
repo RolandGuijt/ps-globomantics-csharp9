@@ -8,7 +8,7 @@ namespace Web.Mappers
         public EventPriceViewModel ConvertPriceDtoToViewModel(EventPriceDto dto)
         {
             var (id, date, name, eventType, venue, percentageSold, price) = dto;
-            
+
             return new EventPriceViewModel
             {
                 Id = id,
@@ -50,7 +50,7 @@ namespace Web.Mappers
 
         public ConcertDto ConvertConcertViewModelToDto(ConcertViewModel viewModel)
         {
-            return new ConcertDto(viewModel.Id, viewModel.Date, viewModel.Name, viewModel.EventType, viewModel.Venue,
+            return new(viewModel.Id, viewModel.Date, viewModel.Name, viewModel.EventType, viewModel.Venue,
                 viewModel.VenueCostType, viewModel.MarketingCostType, viewModel.Capacity, viewModel.Sold,
                 viewModel.ArtistCosts, viewModel.ArtistCostType);
         }
