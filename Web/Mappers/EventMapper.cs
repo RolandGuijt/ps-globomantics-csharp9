@@ -1,6 +1,4 @@
-﻿using System;
-using Shared.Dtos;
-using Shared.Enums;
+﻿using Shared.Dtos;
 using Web.ViewModels;
 
 namespace Web.Mappers
@@ -9,15 +7,17 @@ namespace Web.Mappers
     {
         public EventPriceViewModel ConvertPriceDtoToViewModel(EventPriceDto dto)
         {
-            return new()
+            var (id, date, name, eventType, venue, percentageSold, price) = dto;
+            
+            return new EventPriceViewModel
             {
-                Id = dto.Id,
-                Date = dto.Date,
-                Name = dto.Name,
-                EventType = dto.EventType,
-                Venue = dto.Venue,
-                PercentageSold = dto.PercentageSold,
-                TicketPrice = dto.TicketPrice
+                Id = id,
+                Date = date,
+                Name = name,
+                EventType = eventType,
+                Venue = venue,
+                PercentageSold = percentageSold,
+                TicketPrice = price
             };
         }
 

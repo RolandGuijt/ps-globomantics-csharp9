@@ -32,11 +32,22 @@ namespace Shared.Dtos
 
         public int PercentageSold { get; }
         public int TicketPrice { get; }
+
+        public void Deconstruct(out int id, out DateTimeOffset date, out string name, out EventType eventType, out string venue, out int percentageSold, out int ticketPrice)
+        {
+            id = Id;
+            date = Date;
+            name = Name;
+            eventType = EventType;
+            venue = Venue;
+            percentageSold = PercentageSold;
+            ticketPrice = TicketPrice;
+        }
     }
 
     public class EventDto : DtoBase
     {
-        public EventDto(int id, DateTimeOffset date, string name, EventType eventType, string venue,
+        protected EventDto(int id, DateTimeOffset date, string name, EventType eventType, string venue,
             CostType venueCostType, CostType marketingCostType, int capacity, int sold) : base(id, date, name,
             eventType, venue)
         {
