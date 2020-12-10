@@ -18,7 +18,6 @@
                 <option value="@eventType">@eventType</option>
             }
         </InputSelect>
-        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.EventType)"/>
     </div>
 
     @if (_eventViewModel.EventType != EventType.Unknown)
@@ -26,30 +25,25 @@
         <div class="form-group row">
             <label for="name" class="col-sm-3">Name: </label>
             <InputText id="name" class="form-control col-sm-8" @bind-Value="@_eventViewModel.Name" placeholder="Enter name"></InputText>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.Name)"/>
         </div>
         <div class="form-group row">
             <label for="date" class="col-sm-3">Date: </label>
             <InputDate id="date" class="form-control col-sm-8" @bind-Value="@_eventViewModel.Date" placeholder="Enter date"></InputDate>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.Date)"/>
         </div>
 
         <div class="form-group row">
             <label for="venue" class="col-sm-3">Venue: </label>
             <InputText id="venue" class="form-control col-sm-8" @bind-Value="@_eventViewModel.Venue" placeholder="Enter venue"></InputText>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.Venue)"/>
         </div>
 
         <div class="form-group row">
             <label for="capacity" class="col-sm-3">Capacity: </label>
             <InputNumber id="capacity" class="form-control col-sm-8" @bind-Value="@_eventViewModel.Capacity" placeholder="Enter capacity"></InputNumber>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.Capacity)"/>
         </div>
 
         <div class="form-group row">
             <label for="sold" class="col-sm-3">Sold: </label>
             <InputNumber id="sold" class="form-control col-sm-8" @bind-Value="@_eventViewModel.Sold" placeholder="Enter sold"></InputNumber>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.Sold)"/>
         </div>
 
         <div class="form-group row">
@@ -60,7 +54,6 @@
                     <option value="@costType">@costType</option>
                 }
             </InputSelect>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.VenueCostType)"/>
         </div>
 
         <div class="form-group row">
@@ -71,7 +64,6 @@
                     <option value="@costType">@costType</option>
                 }
             </InputSelect>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => _eventViewModel.MarketingCostType)"/>
         </div>
 
         @if (_eventViewModel is ConferenceViewModel conf)
@@ -79,13 +71,11 @@
             <div class="form-group row">
                 <label for="badgecosts" class="col-sm-3">Badge costs: </label>
                 <InputNumber id="badgecosts" class="form-control col-sm-8" @bind-Value="@conf.BadgeCosts"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => conf.BadgeCosts)"/>
             </div>
 
             <div class="form-group row">
                 <label for="cateringCosts" class="col-sm-3">Catering costs: </label>
                 <InputNumber id="cateringCosts" class="form-control col-sm-8" @bind-Value="@conf.CateringCosts"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => conf.CateringCosts)"/>
             </div>
         }
 
@@ -94,7 +84,6 @@
             <div class="form-group row">
                 <label for="numberofdays" class="col-sm-3">Number of days: </label>
                 <InputNumber id="numberofdays" class="form-control col-sm-8" @bind-Value="@multiDayConf.NumberOfDays"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => multiDayConf.NumberOfDays)"/>
             </div>
 
             <div class="form-group row">
@@ -105,7 +94,6 @@
                         <option value="@costType">@costType</option>
                     }
                 </InputSelect>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => multiDayConf.AccomodationCostType)"/>
             </div>
         }
 
@@ -114,7 +102,6 @@
             <div class="form-group row">
                 <label for="artistCosts" class="col-sm-3">Artist costs: </label>
                 <InputNumber id="artistCosts" class="form-control col-sm-8" @bind-Value="@concert.ArtistCosts"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => concert.ArtistCosts)"/>
             </div>
 
             <div class="form-group row">
@@ -125,7 +112,6 @@
                         <option value="@costType">@costType</option>
                     }
                 </InputSelect>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => concert.ArtistCostType)"/>
             </div>
         }
 
@@ -134,13 +120,11 @@
             <div class="form-group row">
                 <label for="noPlayers" class="col-sm-3">Number of players: </label>
                 <InputNumber id="noPlayers" class="form-control col-sm-8" @bind-Value="@sportsGame.NumberOfPlayers"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => sportsGame.NumberOfPlayers)"/>
             </div>
 
             <div class="form-group row">
                 <label for="costPlayer" class="col-sm-3">Costs per player: </label>
                 <InputNumber id="costPlayer" class="form-control col-sm-8" @bind-Value="@sportsGame.CostsPerPlayer"></InputNumber>
-                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => sportsGame.CostsPerPlayer)"/>
             </div>
         }
         <button type="submit" class="btn btn-primary edit-btn">Add</button>

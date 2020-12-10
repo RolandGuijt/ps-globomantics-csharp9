@@ -8,7 +8,7 @@ namespace Api.Repositories
 {
     public class EventRepository
     {
-        private static readonly List<EventEntity> _events = new()
+        private static readonly List<EventEntity> Events = new()
         {
             new ConferenceEntity
             {
@@ -74,18 +74,18 @@ namespace Api.Repositories
 
         public List<EventEntity> GetAll()
         {
-            return _events;
+            return Events;
         }
 
         public EventEntity GetById(int id)
         {
-            return _events.SingleOrDefault(e => e.Id == id);
+            return Events.SingleOrDefault(e => e.Id == id);
         }
 
         public void AddEvent(EventEntity eventEntity)
         {
             eventEntity.Id = new Random(9999999).Next();
-            _events.Add(eventEntity);
+            Events.Add(eventEntity);
         }
     }
 }
