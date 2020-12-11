@@ -3,9 +3,17 @@ using Shared.Enums;
 
 namespace Shared.Dtos
 {
-    public record DtoBase (int Id, DateTimeOffset Date, string Name, EventType EventType, string Venue);
+    public record DtoBase (int Id, DateTimeOffset Date, string Name, EventType EventType, string Venue)
+    {
+        public string X { get; init; }
+        public void Deconstruct(out int id, out DateTimeOffset date)
+        {
+            id = Id;
+            date = Date;
+        }
+    };
 
-    public record EventPriceDto(int Id, DateTimeOffset Date, string Name, EventType EventType, string Venue,
+public record EventPriceDto(int Id, DateTimeOffset Date, string Name, EventType EventType, string Venue,
         int PercentageSold, int TicketPrice) : DtoBase(
         Id, Date, Name, EventType, Venue);
 

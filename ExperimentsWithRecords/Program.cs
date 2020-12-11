@@ -1,4 +1,6 @@
 ﻿using System;
+using Shared.Dtos;
+using Shared.Enums;
 
 namespace ExperimentsWithRecords
 {
@@ -6,7 +8,8 @@ namespace ExperimentsWithRecords
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DtoBase dto = new DtoBase(1, DateTimeOffset.Now, "Test", EventType.Concert, "Music hall");
+            var (id, date) = dto;
         }
     }
 }
