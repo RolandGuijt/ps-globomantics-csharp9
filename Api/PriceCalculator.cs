@@ -42,9 +42,9 @@ namespace Api
                     };
                     price += e.NumberOfDays switch
                     {
-                        var days when days < 3 => price * days,
-                        var days when days >= 3 && days < 6 => 200,
-                        var days when days >= 6 => 360
+                        < 3 => price * e.NumberOfDays,
+                        >= 3 and < 6 => 200,
+                        >= 6 => 360
                     };
                     break;
                 case ConferenceEntity e: price += e.BadgeCosts + e.CateringCosts;
@@ -62,9 +62,9 @@ namespace Api
                 case SportsGameEntity e:
                     price += e.Capacity switch
                     {
-                        var c when c < 100 => e.NumberOfPlayers * e.CostsPerPlayer / e.Sold,
+                        < 100 => e.NumberOfPlayers * e.CostsPerPlayer / e.Sold,
                         var c when c >= 100 && (e.Capacity < 150 || e.CostsPerPlayer > 1000) => 100,
-                        var c when c >= 150 => e.NumberOfPlayers * e.CostsPerPlayer / 200
+                        >= 150 => e.NumberOfPlayers * e.CostsPerPlayer / 200
                     };
                     break;
                 case not null:
