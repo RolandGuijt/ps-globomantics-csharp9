@@ -63,7 +63,7 @@ namespace Api
                     price += e.Capacity switch
                     {
                         < 100 => e.NumberOfPlayers * e.CostsPerPlayer / e.Sold,
-                        var c when c >= 100 && (e.Capacity < 150 || e.CostsPerPlayer > 1000) => 100,
+                        var c when c >= 100 && (c < 150 || e.CostsPerPlayer > 1000) => 100,
                         >= 150 => e.NumberOfPlayers * e.CostsPerPlayer / 200
                     };
                     break;
