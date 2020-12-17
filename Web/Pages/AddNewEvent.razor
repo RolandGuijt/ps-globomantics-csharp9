@@ -66,6 +66,7 @@
             </InputSelect>
         </div>
 
+
         @if (_eventViewModel is ConferenceViewModel conf)
         {
             <div class="form-group row">
@@ -141,28 +142,15 @@
         if (_eventViewModel.EventType == eventType)
             return;
 
-        EventViewModel newViewModel;
-
-        switch (eventType)
+        EventViewModel newViewModel = eventType switch
         {
-            case EventType.Unknown:
-                newViewModel = new EventViewModel();
-                break;
-            case EventType.Conference:
-                newViewModel = new ConferenceViewModel();
-                break;
-            case EventType.MultiDayConference:
-                newViewModel = new MultiDayConferenceViewModel();
-                break;
-            case EventType.Concert:
-                newViewModel = new ConcertViewModel();
-                break;
-            case EventType.SportsGame:
-                newViewModel = new SportsGameViewModel();
-                break;
-            default:
-                throw new ArgumentException($"Unknown event type {eventType}");
-        }
+            EventType.Unknown => new EventViewModel(),
+            EventType.Conference => new ConferenceViewModel(),
+            EventType.MultiDayConference => new MultiDayConferenceViewModel(),
+            EventType.Concert => new ConcertViewModel(),
+            EventType.SportsGame => new SportsGameViewModel(),
+            _ => throw new ArgumentException($"Unknown event type {eventType}")
+            };
 
         EventMapper.CopyBaseProperties(_eventViewModel, newViewModel);
         newViewModel.EventType = eventType;
@@ -171,17 +159,17 @@
 
     private async Task HandleValidSubmit()
     {
-        EventDto dto = null;
-        if (_eventViewModel is ConferenceViewModel conferenceViewModel)
-            dto = EventMapper.ConvertConferenceViewModelToDto(conferenceViewModel);
-        if (_eventViewModel is MultiDayConferenceViewModel multiDayConferenceViewModel)
-            dto = EventMapper.ConvertMultiDayConferenceViewModelToDto(multiDayConferenceViewModel);
-        if (_eventViewModel is ConcertViewModel concertViewModel)
-            dto = EventMapper.ConvertConcertViewModelToDto(concertViewModel);
-        if (_eventViewModel is SportsGameViewModel sportsGameViewModel)
-            dto = EventMapper.ConvertSportsGameViewModelToDto(sportsGameViewModel);
-        if (dto == null)
-            throw new ArgumentException("Unknown viewmodel type");
+        EventDto dto = _eventViewModel switch
+        {
+            MultiDayConferenceViewModel vm => EventMapper.ConvertMultiDayConferenceViewModelToDto(vm),
+            ConferenceViewModel vm => EventMapper.ConvertConferenceViewModelToDto(vm),
+            ConcertViewModel vm => EventMapper.ConvertConcertViewModelToDto(vm),
+            SportsGameViewModel vm => EventMapper.ConvertSportsGameViewModelToDto(vm),
+            not null =>
+                throw new ArgumentException($"Unknown entity type", nameof(_eventViewModel)),
+            null =>
+                throw new ArgumentNullException(nameof(_eventViewModel))
+            };
 
         var result = await HttpClient.PostAsJsonAsync(_eventViewModel.ApiEndpoint, dto);
         result.EnsureSuccessStatusCode();

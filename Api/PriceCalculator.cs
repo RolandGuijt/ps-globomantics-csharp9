@@ -1,5 +1,6 @@
 ﻿using System;
 using Api.Entities;
+using Microsoft.AspNetCore.Builder;
 using Shared.Enums;
 
 namespace Api
@@ -12,95 +13,67 @@ namespace Api
         {
             var price = 0;
 
-            switch (eventEntity.MarketingCostType)
+            price += eventEntity.MarketingCostType switch
             {
-                case CostType.Cheap:
-                    price += 8;
+                CostType.Cheap => 8,
+                CostType.Moderate => 10,
+                CostType.Expensive => 12,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            price += eventEntity.VenueCostType switch
+            {
+                CostType.Cheap => 4,
+                CostType.Moderate => 6,
+                CostType.Expensive => 10,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            
+            switch (eventEntity)
+            {
+                case MultiDayConferenceEntity e:
+                    price += e.BadgeCosts + e.CateringCosts;
+                    price += e.AccomodationCostType switch
+                    {
+                        CostType.Cheap => 50,
+                        CostType.Moderate => 80,
+                        CostType.Expensive => 110,
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                    price += e.NumberOfDays switch
+                    {
+                        var days when days < 3 => price * days,
+                        var days when days >= 3 && days < 6 => 200,
+                        var days when days >= 6 => 360
+                    };
                     break;
-                case CostType.Moderate:
-                    price += 10;
+                case ConferenceEntity e: price += e.BadgeCosts + e.CateringCosts;
                     break;
-                case CostType.Expensive:
-                    price += 12;
+                case ConcertEntity e: price += 
+                    e.ArtistCosts / e.Capacity;
+                    price += e.ArtistCostType switch
+                    {
+                        CostType.Cheap => 5,
+                        CostType.Moderate => 8,
+                        CostType.Expensive => 11,
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case SportsGameEntity e:
+                    price += e.Capacity switch
+                    {
+                        var c when c < 100 => e.NumberOfPlayers * e.CostsPerPlayer / e.Sold,
+                        var c when c >= 100 && (e.Capacity < 150 || e.CostsPerPlayer > 1000) => 100,
+                        var c when c >= 150 => e.NumberOfPlayers * e.CostsPerPlayer / 200
+                    };
+                    break;
+                case not null:
+                    throw new ArgumentException($"Unknown entity type", nameof(eventEntity));
+                case null:
+                    throw new ArgumentNullException(nameof(eventEntity));
             }
 
-            switch (eventEntity.VenueCostType)
-            {
-                case CostType.Cheap:
-                    price += 4;
-                    break;
-                case CostType.Moderate:
-                    price += 6;
-                    break;
-                case CostType.Expensive:
-                    price += 10;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (eventEntity is ConferenceEntity conf)
-            {
-                price += conf.BadgeCosts;
-                price += conf.CateringCosts;
-            }
-
-            if (eventEntity is MultiDayConferenceEntity multiDayconf)
-            {
-                switch (multiDayconf.AccomodationCostType)
-                {
-                    case CostType.Cheap:
-                        price += 50;
-                        break;
-                    case CostType.Moderate:
-                        price += 80;
-                        break;
-                    case CostType.Expensive:
-                        price += 110;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                if (multiDayconf.NumberOfDays < 3)
-                    price += price * multiDayconf.NumberOfDays;
-                if (multiDayconf.NumberOfDays >= 3 && multiDayconf.NumberOfDays < 6)
-                    price += 200;
-                if (multiDayconf.NumberOfDays >= 6)
-                    price += 360;
-            }
-            else if (eventEntity is ConcertEntity concert)
-            {
-                price += concert.ArtistCosts / concert.Capacity;
-                switch (concert.ArtistCostType)
-                {
-                    case CostType.Cheap:
-                        price += 5;
-                        break;
-                    case CostType.Moderate:
-                        price += 8;
-                        break;
-                    case CostType.Expensive:
-                        price += 11;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            else if (eventEntity is SportsGameEntity sportsGame)
-            {
-                if (sportsGame.Capacity < 100)
-                    price += sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer / sportsGame.Sold;
-                if (sportsGame.Capacity >= 100 && (sportsGame.Capacity < 150 || sportsGame.CostsPerPlayer > 1000))
-                    price += 100;
-                if (sportsGame.Capacity >= 150)
-                    price += sportsGame.NumberOfPlayers * sportsGame.CostsPerPlayer / 200;
-            }
-
-            price = price + price / 100 * _marginPercentage;
+            price += (price / 100) * _marginPercentage;
             return price;
         }
     }
