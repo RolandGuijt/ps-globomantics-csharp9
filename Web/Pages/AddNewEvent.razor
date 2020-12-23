@@ -131,10 +131,11 @@
         <button type="submit" class="btn btn-primary edit-btn">Add</button>
     }
 </EditForm>
-
+<div>@_progress</div>
 
 @code
 {
+    private int _progress;
     private EventViewModel _eventViewModel = new();
 
     private void EventTypeChanged(EventType eventType)
@@ -152,7 +153,8 @@
             _ => throw new ArgumentException($"Unknown event type {eventType}")
             };
 
-        EventMapper.CopyBaseProperties(_eventViewModel, newViewModel);
+        EventMapper.CopyBaseProperties(_eventViewModel, newViewModel, (progress, _) => _progress = progress);
+        
         newViewModel.EventType = eventType;
         _eventViewModel = newViewModel;
     }
